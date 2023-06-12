@@ -38,7 +38,7 @@ end
 export type Scope<C = any> = { [string]: { React.Context<C> } } | nil
 type ScopeHook = (scope: Scope) -> { [string]: Scope }
 
-type CreateScope = {
+export type CreateScope = {
 	scopeName: string,
 	fn: () -> ScopeHook,
 }
