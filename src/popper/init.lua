@@ -41,6 +41,7 @@ end
 
 local ANCHOR_NAME = "PopperAnchor"
 
+type PopperAnchorProps = {
 	virtualRef: React.Ref<GuiObject>?,
 }
 
