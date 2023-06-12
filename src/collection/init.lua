@@ -110,7 +110,7 @@ local function createCollection<ItemElement, ItemData>(name: string)
 		local getItems = React.useCallback(function()
 			local collectionNode = context.collectionRef.current
 			if collectionNode == nil then
-				return
+				return {}
 			end
 
 			local orderedNodes = Array.from(querySelectorAll(collectionNode, ITEM_DATA_ATTR))
