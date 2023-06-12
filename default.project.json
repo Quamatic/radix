@@ -1,0 +1,13 @@
+{
+  "name": "radix",
+  "tree": {
+      "$className": "DataModel",
+      "ReplicatedStorage": {
+          "$className": "ReplicatedStorage",
+          "$path": "Packages",
+          "Radix": {
+              "$path": "src"
+          }
+      }
+  }
+}

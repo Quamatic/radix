@@ -1,0 +1,11 @@
+[package]
+name = "quamatic/radix"
+description = "Radix port for Lua React"
+version = "0.1.0"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+[dependencies]
+React = "core-packages/react@17.0.1-rc.19"
+ReactRoblox = "core-packages/react-roblox@17.0.1-rc.19"
+LuauPolyfill = "jsdotlua/luau-polyfill@1.2.3"
