@@ -1,7 +1,7 @@
 local src = script.Parent.Parent
 local React = require(src.React)
 
-local function useCallbackRef<T>(callback: T | nil): T
+local function useCallbackRef<T>(callback: T?): T
 	local callbackRef = React.useRef(callback)
 
 	React.useEffect(function()

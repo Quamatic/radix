@@ -10,7 +10,7 @@ local Primitive = require(script.Parent.primitive)
 local reactContext = require(script.Parent.context)
 local createContextScope = reactContext.createContextScope
 
-local useComposedRefs = require(script.Parent["use-composed-refs"])
+local useComposedRefs = require(script.Parent["use-composed-refs"]).useComposedRefs
 
 type Scope<C = any> = reactContext.Scope<C>
 
@@ -59,7 +59,7 @@ local PopperAnchor = React.forwardRef(function(props: ScopedProps<PopperAnchorPr
 		context.onAnchorChange(virtualRef.current or ref.current)
 	end)
 
-	return if Boolean(virtualRef)
+	return if Boolean.toJSBoolean(virtualRef)
 		then nil
 		else React.createElement(Primitive.Frame, Object.assign({}, anchorProps, { ref = ref }))
 end)

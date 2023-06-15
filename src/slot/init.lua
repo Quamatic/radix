@@ -22,7 +22,7 @@ local Slot = React.forwardRef(function(props: SlotProps, forwardedRef)
 	local childrenArray = React.Children.toArray(children)
 	local slottable = Array.find(childrenArray, isSlottable)
 
-	if Boolean(slottable) then
+	if Boolean.toJSBoolean(slottable) then
 		local newElement = slottable.props.children :: React.ReactNode
 
 		local newChildren = Array.map(childrenArray, function(child)
@@ -40,7 +40,7 @@ local Slot = React.forwardRef(function(props: SlotProps, forwardedRef)
 		return React.createElement(
 			SlotClone,
 			Object.assign({}, slotProps, { ref = forwardedRef }),
-			if React.isValidElement(newElement) then React.cloneElement(newChildren, nil, newChildren) else nil
+			if React.isValidElement(newElement) then React.cloneElement(newElement, nil, newChildren) else nil
 		)
 	end
 
@@ -93,7 +93,9 @@ SlotClone = React.forwardRef(function(props: SlotCloneProps, forwardedRef)
 		return React.cloneElement(
 			children,
 			Object.assign({}, mergeProps(slotProps, children.props), {
-				ref = if Boolean(forwardedRef) then composeRefs(forwardedRef, children.ref) else children.ref,
+				ref = if Boolean.toJSBoolean(forwardedRef)
+					then composeRefs(forwardedRef, children.ref)
+					else children.ref,
 			})
 		)
 	end
