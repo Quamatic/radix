@@ -2,8 +2,6 @@ local src = script.Parent.Parent.Parent
 local React = require(src.React)
 local LuauPolyfill = require(src.LuauPolyfill)
 local Object = LuauPolyfill.Object
-local Set = LuauPolyfill.Set
-local Array = LuauPolyfill.Array
 
 type Set<T> = LuauPolyfill.Set<T>
 
