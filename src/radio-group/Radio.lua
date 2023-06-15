@@ -12,10 +12,9 @@ local createContextScope = reactContext.createContextScope
 type Scope<C = any> = reactContext.Scope<C>
 
 local Primitive = require(script.Parent.Parent.primitive)
+local Presence = require(script.Parent.Parent.presence)
 
-local createCollection = require(src.Radix.collection).createCollection
 local useComposedRefs = require(src.Radix["use-composed-refs"]).useComposedRefs
-local useControllableState = require(src.Radix["use-controllable-state"])
 local composeEventHandlers = require(src.Radix["compose-event-handlers"])
 
 local RADIO_NAME = "Radio"
@@ -26,7 +25,7 @@ local createRadioContext, createRadioScope = createContextScope(RADIO_NAME)
 type RadioContextValue = { checked: boolean, disabled: boolean? }
 local RadioProvider, useRadioContext = createRadioContext(RADIO_NAME)
 
-type RadioProps = {
+export type RadioProps = {
 	checked: boolean?,
 	disabled: boolean?,
 	onCheck: (() -> ())?,
@@ -59,7 +58,7 @@ local Radio = React.forwardRef(function(props: ScopedProps<RadioProps>, forwarde
 			Object.assign({}, radioProps, {
 				ref = composedRefs,
 				[React.Event.Activated] = composeEventHandlers((props :: any)[React.Event.Activated], function()
-					if not checked then
+					if not disabled and not checked then
 						onCheck()
 					end
 				end),
@@ -69,3 +68,40 @@ local Radio = React.forwardRef(function(props: ScopedProps<RadioProps>, forwarde
 end)
 
 Radio.displayName = RADIO_NAME
+
+local INDICATOR_NAME = "RadioIndicator"
+
+export type RadioIndicatorProps = {
+	forceMount: true?,
+}
+
+local RadioIndicator = React.forwardRef(function(props: ScopedProps<RadioIndicatorProps>, forwardedRef)
+	local __scopeRadio, forceMount, indicatorProps =
+		props.__scopeRadio, props.forceMount, Object.assign({}, props, {
+			__scopeRadio = Object.None,
+			forceMount = Object.None,
+		})
+
+	local context = useRadioContext(INDICATOR_NAME, __scopeRadio)
+
+	return React.createElement(
+		Presence :: any,
+		{
+			present = forceMount or context.checked,
+		},
+		React.createElement(
+			Primitive.Frame,
+			Object.assign({}, indicatorProps, {
+				ref = forwardedRef,
+			})
+		)
+	)
+end)
+
+RadioIndicator.displayName = INDICATOR_NAME
+
+return {
+	createRadioScope = createRadioScope,
+	Radio = Radio,
+	RadioIndicator = RadioIndicator,
+}
